@@ -17,8 +17,7 @@
 ## 🚀 Деплой
 
 ### 🌐 Веб-додаток (Frontend)
-https://github.com/Bortkivskiy/task-tracker-project/tree/master
-
+https://bortkivskiy.github.io/task-tracker-project/
 ### 🔗 REST API (Backend)
 https://stellar-cucurucho-77e6df.netlify.app/
 
