@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Трекер Завдань</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 2em;
+    }
+
+    input,
+    button {
+      margin: 0.5em 0;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Завдання</h1>
+
+  <form id="taskForm">
+    <input type="text" id="title" placeholder="Нове завдання" required />
+    <button type="submit">Додати</button>
+  </form>
+
+  <ul id="taskList"></ul>
+
+  <script>
+    const API = "/.netlify/functions/tasks";
+
+    async function fetchTasks() {
+      const res = await fetch(API);
+      const tasks = await res.json();
+      const list = document.getElementById("taskList");
+      list.innerHTML = "";
+      tasks.forEach(task => {
+        const li = document.createElement("li");
+        li.textContent = task.title + (task.done ? " ✔️" : "");
+        list.appendChild(li);
+      });
+    }
+
+    document.getElementById("taskForm").addEventListener("submit", async e => {
+      e.preventDefault();
+      const title = document.getElementById("title").value;
+      await fetch(API, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title, done: false })
+      });
+      document.getElementById("title").value = "";
+      fetchTasks();
+    });
+
+    fetchTasks();
+  </script>
+</body>
+
+</html>
